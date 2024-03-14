@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
-import { RefulingSchema } from "./refuling";
-import { MaintenanceSchema } from "./maintenance";
+import { MaintenanceSchema } from "./Maintenance";
+import { RefulingSchema } from "./Refuling";
 
 export const CarSchema = new Schema({
   make: String,
