@@ -1,11 +1,11 @@
 import express from "express";
-import jwt from "jsonwebtoken";
 import mondoose from "mongoose";
 import { registerValidation } from "./validations/auth";
 import { validationResult } from "express-validator";
 import UserModal from "./models/User";
 import bcrypt from "bcrypt";
 import { createToken } from "./helpers";
+import checkAuth from "./utils/checkAuth";
 
 mondoose
   .connect("mongodb+srv://admin:Zmmz159@clusterfuilfusion.dumknae.mongodb.net/garage?retryWrites=true&w=majority&appName=ClusterFuilFusion")
@@ -17,7 +17,7 @@ const port = 3000;
 
 app.use(express.json());
 
-app.post("/auth/register", registerValidation, async (req, res) => {
+app.post("/auth/register", registerValidation, async (req: express.Request, res: express.Response) => {
   try {
     const errors = validationResult(req);
 
@@ -50,7 +50,7 @@ app.post("/auth/register", registerValidation, async (req, res) => {
   }
 });
 
-app.post("/auth/login", async (req, res) => {
+app.post("/auth/login", async (req: express.Request, res: express.Response) => {
   try {
     const user = await UserModal.findOne({ email: req.body.email });
 
@@ -63,7 +63,7 @@ app.post("/auth/login", async (req, res) => {
     const isValidPass = await bcrypt.compare(req.body.password, user["_doc"].passwordHash);
 
     if (!isValidPass) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: "Не верный логин или пароль.",
       });
     }
@@ -78,6 +78,14 @@ app.post("/auth/login", async (req, res) => {
     res.status(500).json({
       message: "Не удалось авторизоваться.",
     });
+  }
+});
+
+app.get("/auth/me", checkAuth, (req: express.Request, res: express.Response) => {
+  try {
+    console.log();
+  } catch (err) {
+    console.log("Ошибка при получении информации о пользователе", err);
   }
 });
 
