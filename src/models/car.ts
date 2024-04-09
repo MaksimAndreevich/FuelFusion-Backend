@@ -3,9 +3,9 @@ import { MaintenanceSchema } from "./Maintenance";
 import { RefulingSchema } from "./Refuling";
 
 export const CarSchema = new Schema({
-  make: String,
-  model: String,
+  name: String,
   year: Number,
+  mileage: Number,
   refuelings: [RefulingSchema],
   maintenance: [MaintenanceSchema],
 });
