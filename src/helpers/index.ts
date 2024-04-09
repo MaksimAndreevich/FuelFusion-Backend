@@ -6,7 +6,7 @@ export const createToken = (uid: Types.ObjectId) => {
     {
       _id: uid,
     },
-    "secret123",
+    process.env.JWT_SECRET,
     { expiresIn: "30d" }
   );
 };

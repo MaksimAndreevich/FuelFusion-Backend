@@ -3,11 +3,13 @@ import mondoose from "mongoose";
 import { loginValidation, registerValidation } from "./validations/auth";
 import checkAuth from "./utils/checkAuth";
 import { getMe, login, register } from "./controllers/UserContoller";
+import "dotenv/config";
+import "colors";
 
 mondoose
-  .connect("mongodb+srv://admin:Zmmz159@clusterfuilfusion.dumknae.mongodb.net/garage?retryWrites=true&w=majority&appName=ClusterFuilFusion")
-  .then(() => console.log(`[DB] - Connetn Success`))
-  .catch((err) => console.log(`[DB] - ${err}`));
+  .connect(process.env.MONGO_DB_URL)
+  .then(() => console.log(`[DB] - Connect Success`.green))
+  .catch((err) => console.log(`[DB] - ${err}`.red));
 
 const app = express();
 const port = 3000;
@@ -19,5 +21,5 @@ app.post("/auth/login", loginValidation, login);
 app.get("/auth/me", checkAuth, getMe);
 
 app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
+  return console.log(`Express is listening at http://localhost:${port}`.yellow);
 });

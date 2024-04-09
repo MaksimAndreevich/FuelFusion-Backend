@@ -11,7 +11,7 @@ export default function checkAuth(req: CustomRequest, res: express.Response, nex
 
   if (token) {
     try {
-      const decoded = jwt.verify(token, "secret123") as JwtPayload;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 
       req.userId = decoded._id;
       next();
