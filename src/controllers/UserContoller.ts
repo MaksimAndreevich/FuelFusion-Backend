@@ -1,7 +1,7 @@
 import { validationResult } from "express-validator";
 import { createToken } from "../helpers";
 import express from "express";
-import UserModal from "../models/User";
+import UserModal from "../models/user";
 import bcrypt from "bcrypt";
 import { CustomRequest } from "../../types/global";
 
